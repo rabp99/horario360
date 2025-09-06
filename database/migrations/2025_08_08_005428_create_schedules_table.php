@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->enum('type', [
-                'week',
-                'two_weeks',
-                'month'
-            ]);
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }
