@@ -12,10 +12,9 @@ class LocationCodeFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => $this->faker->unique()->numerify('######'),
-            'name' => $this->faker->city(),
-            'type' => $this->faker->randomElement(['DEPARTAMENTO', 'PROVINCIA', 'DISTRITO']),
-            'parent_id' => null
+            'state' => $this->faker->city(),
+            'province' => $this->faker->city(),
+            'district' => $this->faker->city(),
         ];
     }
 }

@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'first_name',
         'last_name1',
@@ -32,7 +35,8 @@ class Employee extends Model
         'specialty_number',
         'university_id',
         'graduation_year',
-        'is_active'
+        'is_active',
+        'schedule_type'
     ];
 
     protected $casts = [

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->time('check_time');
             $table->enum('check_type', ['ENTRY', 'EXIT']);
             $table->timestamps();
+
+            $table->foreign('schedule_detail_id')->references('id')->on('schedule_details');
         });
     }
 

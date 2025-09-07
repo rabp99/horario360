@@ -51,7 +51,10 @@ class EmployeeFactory extends Factory
             'specialty_id' => Specialty::factory(),
             'specialty_number' => $this->faker->numberBetween(1, 5),
             'university_id' => University::factory(),
-            'graduation_year' => $this->faker->numberBetween(2000, 2025)
+            'graduation_year' => $this->faker->numberBetween(2000, 2025),
+
+            'is_active' => $this->faker->boolean(75),
+            'schedule_type' => $this->faker->randomElement(['FIXED', 'CUSTOM'])
         ];
     }
 }

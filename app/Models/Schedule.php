@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EducationLevelDetail extends Model
+class Schedule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'education_level_id',
+        'schedule_type_id',
         'name',
+        'description',
         'is_active'
     ];
 }

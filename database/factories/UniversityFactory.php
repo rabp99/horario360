@@ -13,8 +13,6 @@ class UniversityFactory extends Factory
     {
         return [
             'name' => $this->faker->company() . ' University',
-            'short_name' => $this->faker->lexify('???'),
-            'description' => $this->faker->sentence(),
             'is_active' => true
         ];
     }

@@ -12,15 +12,7 @@ class SpecialtyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement([
-                'Medicina General',
-                'Pediatría',
-                'Cardiología',
-                'Neurología',
-                'Ginecología',
-                'Traumatología'
-            ]),
-            'description' => $this->faker->sentence(),
+            'name' => $this->faker->sentence(3),
             'is_active' => true
         ];
     }

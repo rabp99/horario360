@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('schedule_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('schedule_type_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('is_active');
+            $table->boolean('monday');
+            $table->boolean('tuesday');
+            $table->boolean('wednesday');
+            $table->boolean('thursday');
+            $table->boolean('friday');
+            $table->boolean('saturday');
+            $table->boolean('sunday');
             $table->timestamps();
-
-            $table->foreign('schedule_type_id')->references('id')->on('schedule_types');
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('schedule_types');
     }
 };

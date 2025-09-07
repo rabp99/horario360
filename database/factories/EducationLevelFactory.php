@@ -6,14 +6,13 @@ use App\Models\EducationLevel;
 use App\Models\EducationLevelDetail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EducationLevelDetailFactory extends Factory
+class EducationLevelFactory extends Factory
 {
-    protected $model = EducationLevelDetail::class;
+    protected $model = EducationLevel::class;
 
     public function definition(): array
     {
         return [
-            'education_level_id' => EducationLevel::factory(),
             'name' => $this->faker->randomElement([
                 'Primaria Completa',
                 'Secundaria Completa',
