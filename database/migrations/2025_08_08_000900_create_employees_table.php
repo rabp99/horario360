@@ -45,6 +45,7 @@ return new class extends Migration
             $table->year('graduation_year');
 
             $table->boolean('is_active');
+            $table->enum('schedule_type', ['FIXED', 'CUSTOM']);
             $table->timestamps();
 
             $table->foreign('location_code_id')->references('id')->on('location_codes');
