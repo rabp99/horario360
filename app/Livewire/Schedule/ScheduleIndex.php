@@ -22,4 +22,6 @@ class ScheduleIndex extends Component
             'scheduleTypes' => $scheduleTypes
         ]);
     }
+
+    public function showScheduleDetails($day) {}
 }
