@@ -15,7 +15,7 @@ class ScheduleSeeder extends Seeder
     public function run(): void
     {
         ScheduleType::factory()
-            ->count(10)
+            ->count(30)
             ->create()
             ->each(function ($scheduleType) {
                 Schedule::factory()
