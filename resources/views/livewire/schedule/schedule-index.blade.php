@@ -111,55 +111,46 @@
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">{{ $scheduleType->name }}</td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('monday')" data-tooltip-target="tooltip-default-monday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-monday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->monday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('tuesday')" data-tooltip-target="tooltip-default-tuesday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-tuesday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->tuesday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('wednesday')" data-tooltip-target="tooltip-default-wednesday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-wednesday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->wednesday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('thursday')" data-tooltip-target="tooltip-default-thursday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-thursday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->thursday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('friday')" data-tooltip-target="tooltip-default-friday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-friday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->friday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('saturday')" data-tooltip-target="tooltip-default-saturday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-saturday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->saturday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <i wire:click="showScheduleDetails('sunday')" data-tooltip-target="tooltip-default-sunday-{{ $key }}" data-tooltip-placement="bottom" class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
-                                        <div id="tooltip-default-sunday-{{ $key }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Ver Detalles
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+                                        @if ($scheduleType->sunday)
+                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        @endif
                                     </td>
                                     <td class="p-4 space-x-2 whitespace-nowrap">
+                                        <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                            wire:click="showScheduleDetails({{ $scheduleType->id }})">
+                                            <i class="fa-regular fa-calendar-days"></i>
+                                            Ver Detalles
+                                        </button>
                                         <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                                             Modificar
@@ -209,81 +200,168 @@
             </div>
         </div>
 
-        @push('modals')
-        <!-- Confirm Enable Modal -->
-        <div wire:ignore.self id="confirm_enable_modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-md max-h-full">
+        <!-- Schedule Details Modal -->
+        <div wire:ignore.self id="schedule_details_modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-6xl max-h-full">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <button type="button" @click="closeConfirmEnable()" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <button type="button" @click="closeScheduleDetailsModal()" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
-                    <div class="p-6 text-center">
-                        <form @submit.prevent="enable()">
-                            <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                            </svg>
-                            <p class="mb-3 text-gray-500 dark:text-gray-400">
-                                Ingrese la siguiente información
-                            </p>
-                            <div class="mb-6">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" class="sr-only peer" wire:model="permission">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                        @if ($permission)
-                                            Permiso permanente
-                                        @else
-                                            Permiso temporal
-                                        @endif
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="flex mb-6">
-                                <div class="w-1/2 me-1">
-                                    <label for="start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
-                                        @error('start') text-red-700 dark:text-red-500 @enderror">
-                                        Fecha inicial *
-                                    </label>
-                                    <input type="date" id="start" wire:model="start" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        @error('start') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" 
-                                        placeholder="Ejem: SUV, Sedán, ...">
-                                    @error('start')
-                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                @if (!$permission)
-                                <div class="w-1/2 ms-1">
-                                    <label for="end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
-                                        @error('end') text-red-700 dark:text-red-500 @enderror">
-                                        Fecha final *
-                                    </label>
-                                    <input type="date" id="end" wire:model="end" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        @error('end') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" 
-                                        placeholder="Ejem: SUV, Sedán, ...">
-                                    @error('end')
-                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                @endif
-                            </div>
-                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                ¿Está seguro de habilitar este vehículo?
-                            </h3>
-                            <button type="submit" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                Sí, estoy seguro
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Detalle de Horario</h3>
+
+                        <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                            <thead class="bg-gray-100 dark:bg-gray-700">
+                                <tr>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Turno
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Lunes
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Martes
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Miércoles
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Jueves
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Viernes
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Sábado
+                                    </th>
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Domingo
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                @foreach ($selectedScheduleType->schedules ?? [] as $schedule)
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        {{ $schedule->name }}
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('MONDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('TUESDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('WEDNESDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('THURSDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('FRIDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('SATURDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <ul>
+                                            @foreach ($schedule->getDetailChecks('SUNDAY') as $scheduleDetailCheck)
+                                            <li>
+                                                {{ $scheduleDetailCheck->id }}
+                                                @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                @else
+                                                <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                @endif
+                                                {{ $scheduleDetailCheck->check_time }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div class="mt-3 flex justify-end">
+                            <button type="button" @click="closeScheduleDetailsModal()" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                Cerrar
                             </button>
-                            <button type="button" @click="closeConfirmEnable()" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                                No, cancelar
-                            </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        @endpush
 
     </div>
     @push('scripts')
@@ -297,37 +375,12 @@
          
         document.addEventListener('alpine:init', () => {
             Alpine.data('scheduleIndex', () => ({
-                schedule_details_modal: null,
-
-                init() {
-                    @this.on('closeDrawer', () => {
-                        const $scheduleDetailsModal = document.getElementById('schedule_details_modal');
-                        
-                        this.schedule_details_modal = new Modal($scheduleDetailsModal, modalOptions);
-                        this.schedule_details_modal.show();
-                    });
-                },
-            }));
-            
-        });
-    </script>
-    @endpush
-
-    @push('modals')
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('scheduleDetailsModal', () => ({
-                open() {
-
-                },
-                close() {
-
+                schedule_details_modal: new Modal(document.querySelector('#schedule_details_modal'), modalOptions),
+                closeScheduleDetailsModal() {
+                    this.schedule_details_modal.hide();
                 },
                 init() {
-                    @this.on('closeDrawer', () => {
-                        const $scheduleDetailsModal = document.getElementById('schedule_details_modal');
-                        
-                        this.schedule_details_modal = new Modal($scheduleDetailsModal, modalOptions);
+                    @this.on('open-schedule-details-modal', () => {
                         this.schedule_details_modal.show();
                     });
                 },

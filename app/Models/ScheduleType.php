@@ -21,4 +21,9 @@ class ScheduleType extends Model
         'saturday',
         'sunday',
     ];
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }
