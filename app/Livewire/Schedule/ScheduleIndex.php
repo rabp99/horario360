@@ -12,6 +12,8 @@ class ScheduleIndex extends Component
 
     public $search;
 
+    public $selectedScheduleType;
+
     protected $queryString = ['search'];
 
     public function render()
@@ -21,5 +23,11 @@ class ScheduleIndex extends Component
         return view('livewire.schedule.schedule-index', [
             'scheduleTypes' => $scheduleTypes
         ]);
+    }
+
+    public function showScheduleDetails(ScheduleType $scheduleType)
+    {
+        $this->selectedScheduleType = $scheduleType;
+        $this->dispatch('open-schedule-details-modal');
     }
 }

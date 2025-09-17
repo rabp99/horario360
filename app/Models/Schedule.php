@@ -15,4 +15,21 @@ class Schedule extends Model
         'description',
         'is_active'
     ];
+
+    public function scheduleDetails()
+    {
+        return $this->hasMany(ScheduleDetail::class);
+    }
+
+    public function getDetailChecks($day)
+    {
+        foreach ($this->scheduleDetails as $scheduleDetail) {
+            if ($scheduleDetail->day === $day) {
+                $currentScheduleDetail = $scheduleDetail;
+                break;
+            }
+        }
+
+        return $currentScheduleDetail->scheduleDetailChecks ?? [];
+    }
 }
