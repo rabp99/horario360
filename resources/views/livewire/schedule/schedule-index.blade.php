@@ -112,37 +112,37 @@
                                     <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">{{ $scheduleType->name }}</td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->monday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->tuesday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->wednesday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->thursday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->friday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->saturday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         @if ($scheduleType->sunday)
-                                        <i class="fa-regular fa-circle-check text-green-500 cursor-pointer"></i>
+                                        <i class="fa-regular fa-circle-check text-green-500"></i>
                                         @endif
                                     </td>
                                     <td class="p-4 space-x-2 whitespace-nowrap">
@@ -364,6 +364,7 @@
         </div>
 
     </div>
+    
     @push('scripts')
     <script>
         const modalOptions = {
