@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('position_id');
             $table->date('start');
             $table->date('end')->nullable();
-            $table->boolean('state');
+            $table->boolean('is_active');
             $table->unsignedDecimal('salary');
             $table->timestamps();
 

@@ -75,3 +75,7 @@ php artisan key:generate
 php artisan serve
 npm run dev
 
+
+
+https://www.peruayni.com/principal/programacion/programacion-periodos
+17815243

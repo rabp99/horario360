@@ -47,12 +47,14 @@ class ScheduleSeeder extends Seeder
                                     'schedule_detail_id' => $scheduleDetail->id,
                                     'check_time' => '08:00',
                                     'check_type' => 'ENTRY',
+                                    'same_day' => true,
                                 ]);
 
                                 ScheduleDetailCheck::create([
                                     'schedule_detail_id' => $scheduleDetail->id,
                                     'check_time' => '17:00',
                                     'check_type' => 'EXIT',
+                                    'same_day' => true,
                                 ]);
                             }
                         }

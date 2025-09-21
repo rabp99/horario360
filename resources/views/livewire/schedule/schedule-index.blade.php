@@ -25,10 +25,14 @@
                         </li>
                         </ol>
                     </nav>
+                    
+                    <x-utils.alert wire:ignore type="success" :message="session('success')" />
+                    
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                         Horarios
                     </h1>
                 </div>
+
                 <div class="sm:flex">
                     <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                         <form class="lg:pr-3" action="#" method="GET">

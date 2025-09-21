@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('schedule_detail_id');
             $table->time('check_time');
             $table->enum('check_type', ['ENTRY', 'EXIT']);
+            $table->boolean('same_day')->default(false);
             $table->timestamps();
 
             $table->foreign('schedule_detail_id')->references('id')->on('schedule_details');
