@@ -36,6 +36,17 @@ class ScheduleCreate extends Component
         'sunday' => [],
     ];
 
+    public $newScheduleDetailCheck = [
+        'check_time' => null,
+        'check_type' => null,
+        'same_day' => true,
+    ];
+
+    public $scheduleDetailCheckTypes = [
+        'ENTRY' => 'ENTRADA',
+        'EXIT' => 'SALIDA'
+    ];
+
     public function mount()
     {
         /*
@@ -135,8 +146,6 @@ class ScheduleCreate extends Component
         return view('livewire.schedule.schedule-create');
     }
 
-    public function addEntry($schedule) {}
-
     public function getColspan()
     {
         $count = array_sum(array_intersect_key($this->state, array_flip([
@@ -192,6 +201,7 @@ class ScheduleCreate extends Component
                                 'schedule_detail_id' => $scheduleDetail->id,
                                 'check_time' => $scheduleDetailCheck['check_time'],
                                 'check_type' => $scheduleDetailCheck['check_type'],
+                                'same_day' => $scheduleDetailCheck['same_day'],
                             ]);
                         }
                     }
@@ -199,19 +209,35 @@ class ScheduleCreate extends Component
             }
 
             DB::commit();
+
+            redirect()->route('schedule.schedule-index')->with('success', 'El horario fue registrado correctamente.');
         } catch (\Throwable $th) {
             DB::rollBack();
             logger($th->getMessage());
+            session()->flash('error', 'El horario no fue registrado correctamente.');
         }
     }
 
-    public function addScheduleDetailCheck($day, $checkType)
+    public function addScheduleDetailCheck($day)
     {
         $scheduleDetailCheck = [
-            'check_time' => '00:00',
-            'check_type' => $checkType
+            'check_type' => $this->newScheduleDetailCheck['check_type'],
+            'check_time' => $this->newScheduleDetailCheck['check_time'],
+            'same_day' => $this->newScheduleDetailCheck['same_day'],
         ];
 
         $this->newSchedule[$day][] = $scheduleDetailCheck;
+
+        $this->newScheduleDetailCheck['check_type'] = null;
+        $this->newScheduleDetailCheck['check_time'] = null;
+        $this->newScheduleDetailCheck['same_day'] = true;
+
+        $this->dispatch('closeAddScheduleDetailCheckDrawer');
+    }
+
+    public function addSchedule()
+    {
+        $this->state['schedules'][] = $this->newSchedule;
+        $this->dispatch('closeAddScheduleModal');
     }
 }

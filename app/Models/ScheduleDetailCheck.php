@@ -13,5 +13,10 @@ class ScheduleDetailCheck extends Model
         'schedule_detail_id',
         'check_time',
         'check_type',
+        'same_day',
+    ];
+
+    protected $casts = [
+        'same_day' => 'boolean',
     ];
 }

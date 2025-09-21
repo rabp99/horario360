@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('positions', function (Blueprint $table) {
+        Schema::create('working_condition_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('working_condition_id');
             $table->string('name');
             $table->boolean('is_active');
             $table->timestamps();
+
+            $table->foreign('working_condition_id')->references('id')->on('working_conditions');
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('working_condition_details');
     }
 };
