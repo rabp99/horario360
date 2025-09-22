@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('scheduling_id');
+            $table->unsignedBigInteger('schedule_id');
+            $table->unsignedBigInteger('service_id');
             $table->date('attendance_date');
             $table->enum('state', [
                 'attendance',
@@ -27,7 +29,9 @@ return new class extends Migration
             $table->time('delay_time');
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('scheduling_id')->references('id')->on('schedulings');
+            $table->foreign('schedule_id')->references('id')->on('schedules');
+            $table->foreign('service_id')->references('id')->on('services');
         });
     }
 

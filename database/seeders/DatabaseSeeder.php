@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AreaSeeder::class,
             ServiceSeeder::class,
             PositionSeeder::class,
-            WorkingConditionSeeder::class
+            WorkingConditionSeeder::class,
+            SchedulingSeeder::class
         ]);
     }
 }
