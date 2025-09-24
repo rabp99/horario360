@@ -20,21 +20,28 @@ class SchedulingManage extends Component
 
     public $employees = [];
 
-    public $selectedId = null;
+    public $selectedEmployeeId = null;
 
     public function updatedQuery()
     {
-        $this->employees = Employee::where('first_name', 'like', '%' . $this->query . '%')
+        $query = Employee::query();
+
+        if ($this->query && !$this->selectedEmployeeId) {
+            $query->where('first_name', 'like', '%' . $this->query . '%');
+        }
+
+        $this->employees = $query
             ->limit(10)
             ->get();
     }
 
     public function selectEmployee($id)
     {
+        logger('11111111');
         $employee = Employee::find($id);
         if ($employee) {
-            $this->query = $employee->name;
-            $this->selectedId = $employee->id;
+            $this->query = $employee->full_name;
+            $this->selectedEmployeeId = $employee->id;
             $this->employees = [];
         }
     }
@@ -56,5 +63,15 @@ class SchedulingManage extends Component
     public function render()
     {
         return view('livewire.scheduling.scheduling-manage');
+    }
+
+    public function onQueryFocus()
+    {
+        $this->updatedQuery();
+    }
+
+    public function onQueryBlur()
+    {
+        $this->employees = [];
     }
 }
