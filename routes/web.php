@@ -13,6 +13,8 @@ use App\Livewire\Position\PositionIndex;
 use App\Livewire\Position\PositionCreate;
 use App\Livewire\WorkingCondition\WorkingConditionIndex;
 use App\Livewire\WorkingCondition\WorkingConditionCreate;
+use App\Livewire\Scheduling\SchedulingIndex;
+use App\Livewire\Scheduling\SchedulingManage;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,4 +57,7 @@ Route::middleware([
 
     Route::get('condition-laboral', WorkingConditionIndex::class)->name('working-condition.working-condition-index');
     Route::get('condition-laboral/nuevo', WorkingConditionCreate::class)->name('working-condition.working-condition-create');
+
+    Route::get('programaciones', SchedulingIndex::class)->name('scheduling.scheduling-index');
+    Route::get('programaciones/programar', SchedulingManage::class)->name('scheduling.scheduling-manage');
 });
