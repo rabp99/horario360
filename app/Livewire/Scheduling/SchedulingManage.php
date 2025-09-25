@@ -100,6 +100,7 @@ class SchedulingManage extends Component
 
     public function onQueryServiceBlur()
     {
+        logger('dasdas');
         $this->services = [];
     }
 

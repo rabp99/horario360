@@ -39,7 +39,7 @@
                             <div class="flex">
                                 <div class="flex-none">
 
-                                    <div class="mb-4 relative ">
+                                    <div class="mb-4 relative">
                                         <label for="queryEmployee" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
                                             @error('queryEmployee') text-red-700 dark:text-red-500 @enderror">
                                             Trabajadores Disponibles (36)
@@ -74,25 +74,51 @@
                                                 @endforelse
                                             </ul>
                                         @endif
+
+                                    </div>
+
+                                    <div class="mb-4 relative">
+                                        <label for="queryService" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
+                                            @error('queryService') text-red-700 dark:text-red-500 @enderror">
+                                            Servicios
+                                        </label>
+                                        <input type="text" id="queryService" wire:model.live="queryService" 
+                                            wire:focus="onQueryServiceFocus()"
+                                            autocomplete="off"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+                                            @error('queryService') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" 
+                                            placeholder="Servicio" maxlength="120">
+                                        @if ($selectedServiceId)
+                                        <div class="absolute inset-y-0 top-7 right-6 flex items-center pr-3">
+                                            <i wire:click="deSelectService()" class="cursor-pointer fa-solid fa-x text-gray-500"></i>
+                                        </div>
+                                        @endif
+                                        <div class="pointer-events-none absolute inset-y-0 top-7 right-0 flex items-center pr-3">
+                                            <i class="fa-solid fa-chevron-down text-gray-500"></i>
+                                        </div>
+                                        @error('queryService')
+                                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                        @enderror
+
+                                        @if(!empty($services))
+                                            <ul id="services" class="absolute w-full z-10 bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto">
+                                                @forelse($services as $service)
+                                                    <li wire:click="selectService({{ $service->id }})"
+                                                        class="cursor-pointer px-4 py-2 hover:bg-blue-100">
+                                                        {{ $service->name }}
+                                                    </li>
+                                                @empty
+                                                    <li class="px-4 py-2 text-gray-500">Sin resultados</li>
+                                                @endforelse
+                                            </ul>
+                                        @endif
+
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
                                             @error('name') text-red-700 dark:text-red-500 @enderror">
                                             Turnos
-                                        </label>
-                                        <input type="text" id="name" wire:model="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                            @error('name') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" 
-                                            placeholder="Nombres" maxlength="120">
-                                        @error('name')
-                                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
-                                            @error('name') text-red-700 dark:text-red-500 @enderror">
-                                            Servicios
                                         </label>
                                         <input type="text" id="name" wire:model="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
                                             @error('name') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" 
@@ -195,13 +221,20 @@
             Alpine.data('schedulingManage', () => ({
                 init() {
                     document.addEventListener('click', (e) => {
-                        const div1 = document.querySelector('#queryEmployee');
-                        const div2 = document.querySelector('#employees');
+                        const divQueryEmployee = document.querySelector('#queryEmployee');
+                        const divEmployees = document.querySelector('#employees');
 
-                        if (!div1.contains(e.target) && !div2.contains(e.target)) {
+                        if (divQueryEmployee && divEmployees && !divQueryEmployee.contains(e.target) && !divEmployees.contains(e.target)) {
                             this.$wire.onQueryEmployeeBlur();                            
                         }
-                    })
+
+                        const divQueryService = document.querySelector('#queryService');
+                        const divServices = document.querySelector('#services');
+                        
+                        if (divQueryService && divServices && !divQueryService.contains(e.target) && !divServices.contains(e.target)) {
+                            this.$wire.onQueryServiceBlur();                            
+                        }
+                    });
                 }
             }));
             
