@@ -36,7 +36,9 @@ class Employee extends Model
         'university_id',
         'graduation_year',
         'is_active',
-        'schedule_type'
+        'scheduling_type',
+        'schedule_type_id',
+        'schedule_id'
     ];
 
     protected $casts = [
@@ -88,6 +90,22 @@ class Employee extends Model
     public function university(): BelongsTo
     {
         return $this->belongsTo(University::class);
+    }
+
+    /**
+     * Get the schedule type that owns the Employee
+     */
+    public function scheduleType(): BelongsTo
+    {
+        return $this->belongsTo(ScheduleType::class);
+    }
+
+    /**
+     * Get the schedule that owns the Employee
+     */
+    public function schedule(): BelongsTo
+    {
+        return $this->belongsTo(Schedule::class);
     }
 
     /**
