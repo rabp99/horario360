@@ -45,7 +45,9 @@ return new class extends Migration
             $table->year('graduation_year');
 
             $table->boolean('is_active');
-            $table->enum('schedule_type', ['FIXED', 'CUSTOM']);
+            $table->enum('scheduling_type', ['FIXED', 'CUSTOM']);
+            $table->unsignedBigInteger('schedule_type_id');
+            $table->unsignedBigInteger('schedule_id')->nullable();
             $table->timestamps();
 
             $table->foreign('location_code_id')->references('id')->on('location_codes');
@@ -53,6 +55,8 @@ return new class extends Migration
             $table->foreign('occupation_id')->references('id')->on('occupations');
             $table->foreign('specialty_id')->references('id')->on('specialties');
             $table->foreign('university_id')->references('id')->on('universities');
+            $table->foreign('schedule_type_id')->references('id')->on('schedule_types');
+            $table->foreign('schedule_id')->references('id')->on('schedules');
         });
     }
 
