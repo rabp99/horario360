@@ -28,13 +28,13 @@ class Employee extends Model
         'phone',
         'cell_phone',
         'email',
-        'education_level_detail_id',
-        'occupation_id',
-        'tuition_code',
-        'specialty_id',
-        'specialty_number',
-        'university_id',
-        'graduation_year',
+        'education_level_detail_id', //nivel educativo
+        'occupation_id', // profesion
+        'tuition_code', // posible grado
+        'specialty_id', //especialidad
+        'specialty_number', //numero especialidad
+        'university_id', //universidad
+        'graduation_year', // año de egreso
         'is_active',
         'scheduling_type',
         'schedule_type_id',
