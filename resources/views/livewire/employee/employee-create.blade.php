@@ -423,28 +423,7 @@
                                     </p>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="mb-4">
-                            <label
-                                for="email"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.email') text-red-700 dark:text-red-500 @enderror"
-                            >
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                wire:model="newEmployee.email"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.email') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                placeholder="ejemplo@ejemplo.com"
-                                maxlength="120"
-                            />
-                            @error('newEmployee.email')
-                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
+                        </div>                      
                     </div>
 
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
@@ -647,7 +626,7 @@
 
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                         <h3 class="mb-4 text-xl font-semibold dark:text-white">Asignación de horario</h3>
-                        <div class="mb-4">
+                        <div class="flex mb-4">
                             <div class="w-1/3 me-2">
                                 <label
                                     for="scheduling_type"
@@ -674,7 +653,191 @@
                                     </p>
                                 @enderror
                             </div>
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="schedule_type_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.schedule_type_id') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Tipo de horario *
+                                </label>
+                                <select
+                                    id="schedule_type_id"
+                                    wire:model.live="newEmployee.schedule_type_id"      
+                                    wire:change="getSchedulesByType($event.target.value)"                              
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.schedule_type_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                >
+                                    <option value="">-- SELECCIONAR --</option>
+                                    @foreach ($scheduleTypes as $scheduleType)
+                                        <option value="{{ $scheduleType->id }}">
+                                            {{ $scheduleType->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('newEmployee.schedule_type_id')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror                               
+                            </div>     
+                            <pre>
+                                {{$newEmployee['schedule_id']}}
+                            </pre>                       
                         </div>
+                        @if($newEmployee['scheduling_type'] === 'FIXED' && $newEmployee['schedule_type_id'])
+                        <div class="mb-4">
+                            <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                                <thead class="bg-gray-100 dark:bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Seleccionar
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Turno
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Lunes
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Martes
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Miércoles
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Jueves
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Viernes
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Sábado
+                                        </th>
+                                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                            Domingo
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                    @foreach ($schedules as $schedule)
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                         <td class="p-4 text-center">                                            
+                                            <input
+                                                type="radio"
+                                                name="scheduleSelector"
+                                                wire:model.live="selectedSchedule"
+                                                value="{{ $schedule->id }}"
+                                                class="text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600"
+                                            />
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            {{ $schedule->name }}
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('MONDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('TUESDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('WEDNESDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('THURSDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('FRIDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('SATURDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                            <ul>
+                                                @foreach ($schedule->getDetailChecks('SUNDAY') as $scheduleDetailCheck)
+                                                <li>
+                                                    {{ $scheduleDetailCheck->id }}
+                                                    @if ($scheduleDetailCheck->check_type === 'ENTRY')
+                                                    <i class="fa-solid fa-right-to-bracket text-green-500"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-right-from-bracket text-red-500"></i>
+                                                    @endif
+                                                    {{ $scheduleDetailCheck->check_time }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        @endif
                         <div class="flex justify-end flex-col lg:flex-row">
                             <a
                                 href="{{ route('employee.employee-index') }}"
