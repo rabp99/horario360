@@ -54,7 +54,7 @@ class EmployeeFactory extends Factory
             'graduation_year' => $this->faker->numberBetween(2000, 2025),
 
             'is_active' => $this->faker->boolean(75),
-            'schedule_type' => $this->faker->randomElement(['FIXED', 'CUSTOM'])
+            'scheduling_type' => $this->faker->randomElement(['FIXED', 'CUSTOM'])
         ];
     }
 }
