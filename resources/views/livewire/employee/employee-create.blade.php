@@ -452,14 +452,39 @@
                         <div class="flex mb-4">
                             <div class="w-1/3 me-2">
                                 <label
-                                    for="education_level_detail_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.education_level_detail_id') text-red-700 dark:text-red-500 @enderror"
+                                    for="education_level_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.education_level_id') text-red-700 dark:text-red-500 @enderror"
                                 >
                                     Nivel educativo *
                                 </label>
                                 <select
+                                    id="education_level_id"
+                                    wire:model.live="selectedEducationLevel"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.education_level_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                >
+                                    <option value="">-- SELECCIONAR --</option>
+                                    @foreach ($educationLevels as $educationLevel)
+                                        <option value="{{ $educationLevel->id }}">
+                                            {{ $educationLevel->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('newEmployee.education_level_id')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="education_level_detail_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.education_level_detail_id') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Grado educativo *
+                                </label>
+                                <select
                                     id="education_level_detail_id"
-                                    wire:model="newEmployee.newEmployee.education_level_detail_id"
+                                    wire:model="newEmployee.education_level_detail_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.education_level_detail_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                 >
                                     <option value="">-- SELECCIONAR --</option>
@@ -474,32 +499,7 @@
                                         {{ $message }}
                                     </p>
                                 @enderror
-                            </div>
-                            <div class="w-1/3 me-2">
-                                <label
-                                    for="tuition_code"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.tuition_code') text-red-700 dark:text-red-500 @enderror"
-                                >
-                                    Grado educativo *
-                                </label>
-                                <select
-                                    id="tuition_code"
-                                    wire:model="newEmployee.tuition_code"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.tuition_code') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                >
-                                    <option value="">-- SELECCIONAR --</option>
-                                    @foreach ([] as $grade)
-                                        <option value="{{ $grade->id }}">
-                                            {{ $grade->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('newEmployee.tuition_code')
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
+                            </div>                            
                             <div class="w-1/3 me-2">
                                 <label
                                     for="occupation_id"
@@ -527,7 +527,28 @@
                             </div>
                         </div>
                         <div class="flex mb-4">
-                            <div class="w-1/2 me-2">
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="tuition_code"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.tuition_code') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Colegiatura *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="tuition_code"
+                                    wire:model="newEmployee.tuition_code"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.tuition_code') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    placeholder="N° colegiatura"
+                                    maxlength="90"
+                                />
+                                @error('newEmployee.tuition_code')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div class="w-1/3 me-2">
                                 <label
                                     for="specialty_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.specialty_id') text-red-700 dark:text-red-500 @enderror"
@@ -552,7 +573,7 @@
                                     </p>
                                 @enderror
                             </div>
-                            <div class="w-1/2 me-2">
+                            <div class="w-1/3 me-2">
                                 <label
                                     for="specialty_number"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.specialty_number') text-red-700 dark:text-red-500 @enderror"
@@ -616,6 +637,38 @@
                                     maxlength="90"
                                 />
                                 @error('newEmployee.graduation_year')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                        <h3 class="mb-4 text-xl font-semibold dark:text-white">Asignación de horario</h3>
+                        <div class="mb-4">
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="scheduling_type"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.scheduling_type') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Tipo de horario *
+                                </label>
+                                <select
+                                    id="scheduling_type"
+                                    wire:model="newEmployee.scheduling_type"
+                                    wire:change="selectSchedulingType($event.target.value)"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.scheduling_type') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                >
+                                    <option value="">-- SELECCIONAR --</option>
+                                    @foreach ($schedulingTypes as $schedulingType)
+                                        <option value="{{ $schedulingType }}">
+                                            {{ $schedulingType === 'FIXED' ? 'NORMAL' : 'PERSONALIZADO' }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('newEmployee.scheduling_type')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
