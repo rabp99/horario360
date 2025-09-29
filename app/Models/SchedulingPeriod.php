@@ -28,6 +28,7 @@ class SchedulingPeriod extends Model
     {
         return $this->hasMany(SchedulingPeriodsArea::class)
             ->join('areas', 'areas.id', '=', 'scheduling_periods_areas.area_id')
-            ->orderBy('areas.name');
+            ->orderBy('areas.name')
+            ->select('scheduling_periods_areas.*');
     }
 }

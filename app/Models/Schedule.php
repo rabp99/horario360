@@ -21,6 +21,11 @@ class Schedule extends Model
         return $this->hasMany(ScheduleDetail::class);
     }
 
+    public function scheduleType()
+    {
+        return $this->belongsTo(ScheduleType::class);
+    }
+
     public function getDetailChecks($day)
     {
         foreach ($this->scheduleDetails as $scheduleDetail) {

@@ -2,10 +2,17 @@
 
 namespace App\Livewire\Scheduling;
 
+use App\Models\Attendance;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
 use App\Models\Employee;
+use App\Models\Schedule;
+use App\Models\Scheduling;
+use App\Models\SchedulingPeriodsArea;
 use App\Models\Service;
+use App\Models\ScheduleDetail;
+use App\Models\AttendanceCheck;
+use Illuminate\Support\Facades\DB;
 
 class SchedulingManage extends Component
 {
@@ -29,7 +36,17 @@ class SchedulingManage extends Component
 
     public $selectedServiceId = null;
 
-    public $name;
+    public $schedule_id;
+
+    public $schedules = [];
+
+    public $attendances = [];
+
+    public $year;
+
+    public $month;
+
+    public $schedulingPeriodsArea;
 
     public function updatedQueryEmployee()
     {
@@ -51,6 +68,7 @@ class SchedulingManage extends Component
             $this->queryEmployee = $employee->full_name;
             $this->selectedEmployeeId = $employee->id;
             $this->employees = [];
+            $this->schedules = Schedule::where('schedule_type_id', $employee->schedule_type_id)->get();
         }
     }
 
@@ -100,7 +118,6 @@ class SchedulingManage extends Component
 
     public function onQueryServiceBlur()
     {
-        logger('dasdas');
         $this->services = [];
     }
 
@@ -110,11 +127,13 @@ class SchedulingManage extends Component
         $this->selectedServiceId = null;
     }
 
-    public function mount()
+    public function mount(SchedulingPeriodsArea $schedulingPeriodsArea)
     {
-        $year = 2025;
-        $month = 12;
-        $this->date = Carbon::createFromDate($year, $month, 1);
+        $this->schedulingPeriodsArea = $schedulingPeriodsArea;
+        $this->year = $schedulingPeriodsArea->schedulingPeriod->year;
+        $this->month = $schedulingPeriodsArea->schedulingPeriod->month;
+
+        $this->date = Carbon::createFromDate($this->year, $this->month, 1);
 
         $this->daysInMonth = $this->date->daysInMonth;
 
@@ -127,5 +146,64 @@ class SchedulingManage extends Component
     public function render()
     {
         return view('livewire.scheduling.scheduling-manage');
+    }
+
+    public function onSelectDate($day)
+    {
+        $this->attendances[$day] = [
+            'employee_id' => $this->selectedEmployeeId,
+            'schedule_id' => $this->schedule_id,
+            'schedule_name' => Schedule::find($this->schedule_id)->name,
+            'service_id' => $this->selectedServiceId,
+            'service_name' => Service::find($this->selectedServiceId)->name
+        ];
+    }
+
+    public function store()
+    {
+        try {
+            DB::beginTransaction();
+
+            $scheduling = Scheduling::create([
+                'employee_id' => $this->selectedEmployeeId,
+                'scheduling_periods_area_id' => $this->schedulingPeriodsArea->id,
+            ]);
+
+            foreach ($this->attendances as $key => $attendance) {
+                $attendanceDate = Carbon::createFromDate($this->year, $this->month, $key);
+                $attendance = Attendance::create([
+                    'scheduling_id' => $scheduling->id,
+                    'schedule_id' => $attendance['schedule_id'],
+                    'service_id' => $attendance['service_id'],
+                    'attendance_date' => $attendanceDate,
+                    'state' => 'pending',
+                ]);
+
+                $scheduleDetail = ScheduleDetail::where('schedule_id', $attendance['schedule_id'])
+                    ->where('day', $attendanceDate->dayOfWeek)->first();
+
+                if (!$scheduleDetail && count($scheduleDetail->scheduleDetailChecks)) {
+                    continue;
+                }
+
+                foreach ($scheduleDetail->scheduleDetailChecks as $scheduleDetailCheck) {
+                    $checkTimeExpected = Carbon::createFromFormat('Y-m-d H:i:s', $attendanceDate->format('Y-m-d') . ' ' . $scheduleDetailCheck->check_time);
+                    AttendanceCheck::create([
+                        'attendance_id' => $attendance->id,
+                        'check_time_expected' => $checkTimeExpected,
+                        'check_type' => $scheduleDetailCheck->check_type,
+                    ]);
+                }
+
+                DB::commit();
+
+                redirect()->route('scheduling.scheduling-index')->with('success', 'La Programación fue registrada correctamente.');
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            logger($th->getMessage());
+            session()->flash('error', 'La Programación no fue registrada correctamente.');
+            dd($th);
+        }
     }
 }
