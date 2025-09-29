@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Models\Area;
+use App\Models\EducationLevel;
 use App\Models\EducationLevelDetail;
 use App\Models\Occupation;
 use App\Models\Specialty;
@@ -35,28 +36,35 @@ class EmployeeCreate extends Component
 
     public $hasEmploymentHistory = false;
     public $areas;
-    public $educationLevelDetails;
+    public $educationLevels;
+    public $educationLevelDetails = [];
     public $occupations;
     public $specialties;
     public $universities;
     public $documentTypes;
     public $genders;
     public $maritalStatuses;
+    public $schedulingTypes;
     public $has_disability = false;     
 
     public $searchDistrict = '';
     public $districtResults = [];    
 
+    public $selectedEducationLevel = '';
+    public $scheduleAssignType = false;
+    
+     
     public function mount()
     {
-        $this->areas = Area::all();
-        $this->educationLevelDetails = EducationLevelDetail::all();
+        $this->areas = Area::all();        
+        $this->educationLevels = EducationLevel::all();        
         $this->occupations = Occupation::all();
         $this->specialties = Specialty::all();
         $this->universities = University::all();
         $this->documentTypes = Employee::DOCUMENT_TYPES;
         $this->genders = Employee::GENDERS;
         $this->maritalStatuses = Employee::MARITAL_STATUSES;
+        $this->schedulingTypes = Employee::SCHEDULING_TYPES;
     }
 
     public function render()
@@ -64,11 +72,18 @@ class EmployeeCreate extends Component
         return view('livewire.employee.employee-create');
     }
 
+    public function updatedSelectedEducationLevel()
+    {               
+        $this->educationLevelDetails = [];       
+        if (strlen($this->selectedEducationLevel) > 0) {
+            $this->educationLevelDetails = EducationLevelDetail::query()
+                ->where('education_level_id', $this->selectedEducationLevel)                
+                ->get();
+        }          
+    }
+
     public function updatedSearchDistrict()
-    {       
-        /* Log::info('Valor actualizado de searchDistrict:', [
-            'valor' => $this->searchDistrict
-        ]); */
+    {              
         if (strlen($this->searchDistrict) > 0) {
             $this->districtResults = LocationCode::query()
                 ->where('district', 'like', '%' . $this->searchDistrict . '%')
@@ -88,13 +103,20 @@ class EmployeeCreate extends Component
         $this->districtResults = []; 
     }
 
+    public function selectSchedulingType($type)
+    {       
+        Log::info('selectSchedulingType:', [
+            'valor' => $type
+        ]);                
+    }
+
     public function store()
     {
         try {
             DB::beginTransaction();
 
             Log::info('store1', [
-                'DATA' => $this->$newEmployee
+                'DATA' => $this->newEmployee
             ]);           
         
             DB::commit();
