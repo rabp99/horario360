@@ -678,10 +678,7 @@
                                         {{ $message }}
                                     </p>
                                 @enderror                               
-                            </div>     
-                            <pre>
-                                {{$newEmployee['schedule_id']}}
-                            </pre>                       
+                            </div>                                                      
                         </div>
                         @if($newEmployee['scheduling_type'] === 'FIXED' && $newEmployee['schedule_type_id'])
                         <div class="mb-4">
