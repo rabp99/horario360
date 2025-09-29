@@ -28,17 +28,17 @@ class Employee extends Model
         'phone',
         'cell_phone',
         'email',
-        'education_level_detail_id', //GRADO - renderizar nivel educativo  -  filtrar detail de acuerdo a eso y elegir deail para este campo q seria el grado
+        'education_level_detail_id', // GRADO - renderizar nivel educativo  -  filtrar detail de acuerdo a eso y elegir deail para este campo q seria el grado
         'occupation_id', // profesion
         'tuition_code', // nro colegiatura
-        'specialty_id', //especialidad
-        'specialty_number', //numero especialidad
-        'university_id', //universidad
+        'specialty_id', // especialidad
+        'specialty_number', // numero especialidad
+        'university_id', // universidad
         'graduation_year', // año de egreso
         'is_active',
-        'scheduling_type',// checkbox   fixed / custom
-        'schedule_type_id',//obligatorio
-        'schedule_id'
+        'scheduling_type',// FIXED - ELIGE TURNO / CUSTOM - NO ELIGE
+        'schedule_type_id',// obligatorio
+        'schedule_id' // 
     ];
 
     protected $casts = [
