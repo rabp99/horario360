@@ -26,7 +26,7 @@ return new class extends Migration
                 'delay',
                 'pending'
             ]);
-            $table->time('delay_time');
+            $table->time('delay_time')->nullable();
             $table->timestamps();
 
             $table->foreign('scheduling_id')->references('id')->on('schedulings');

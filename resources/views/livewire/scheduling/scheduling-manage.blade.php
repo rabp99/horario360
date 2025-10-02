@@ -37,7 +37,7 @@
                         <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
 
                             <div class="flex">
-                                <div class="flex-none">
+                                <div class="flex-none w-64">
 
                                     <div class="mb-4 relative">
                                         <label for="queryEmployee" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
@@ -116,14 +116,26 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
-                                            @error('name') text-red-700 dark:text-red-500 @enderror">
+                                        <label for="schedule_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
+                                            @error('schedule_id') text-red-700 dark:text-red-500 @enderror">
                                             Turnos
                                         </label>
-                                        <input type="text" id="name" wire:model="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                            @error('name') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" 
-                                            placeholder="Nombres" maxlength="120">
-                                        @error('name')
+                                        
+                                        <select id="schedule_id" wire:model.live="schedule_id"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+                                                @error('schedule_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700
+                                                focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500
+                                                dark:border-red-500 @enderror">
+                                            <option value="">-- SELECCIONAR --</option>
+                                            @foreach($schedules as $schedule)
+                                                <option value="{{ $schedule->id }}">{{ $schedule->scheduleType->name }} - {{ $schedule->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('schedule_id')
                                             <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -144,18 +156,27 @@
                                                 <div class="text-center font-semibold border border-gray-500 p-2 text-gray-900 dark:text-white">{{ $day }}</div>
                                             @endforeach
 
-                                            {{-- Espacios vacíos antes de que empiece el mes --}}
                                             @for ($i = 0; $i < $startDay; $i++)
-                                                <div class="border border-gray-500 p-4"></div>
+                                                <div class="border border-gray-500 p-2 h-32"></div>
                                             @endfor
 
-                                            {{-- Días del mes --}}
                                             @for ($day = 1; $day <= $daysInMonth; $day++)
-                                                <div class="border border-gray-500 p-4 text-end text-gray-900 dark:text-white">{{ $day }}</div>
+                                                <div wire:click="onSelectDate({{ $day }})" class="border border-gray-500 p-2 text-gray-900 dark:text-white min-h-32 cursor-pointer">
+                                                    <div class="text-end">
+                                                        {{ $day }}
+                                                    </div>
+                                                    @if (array_key_exists($day, $attendances))
+                                                    <button type="button" class="text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                        <div>{{ $attendances[$day]['schedule_name'] }}</div>
+                                                        <hr>
+                                                        <div>{{ $attendances[$day]['service_name'] }}</div>
+                                                    </button>
+                                                    @endif
+                                                </div>
                                             @endfor
 
                                             @for ($i = 0; $i < $remaining; $i++)
-                                                <div class="border border-gray-500 p-4"></div>
+                                                <div class="border border-gray-500 p-2 h-32"></div>
                                             @endfor
 
                                         </div>

@@ -59,5 +59,5 @@ Route::middleware([
     Route::get('condition-laboral/nuevo', WorkingConditionCreate::class)->name('working-condition.working-condition-create');
 
     Route::get('programaciones', SchedulingIndex::class)->name('scheduling.scheduling-index');
-    Route::get('programaciones/programar', SchedulingManage::class)->name('scheduling.scheduling-manage');
+    Route::get('programaciones/programar/{schedulingPeriodsArea}', SchedulingManage::class)->name('scheduling.scheduling-manage');
 });

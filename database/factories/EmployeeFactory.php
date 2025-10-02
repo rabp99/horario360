@@ -5,6 +5,8 @@ namespace Database\Factories;
 use App\Models\EducationLevelDetail;
 use App\Models\LocationCode;
 use App\Models\Occupation;
+use App\Models\ScheduleType;
+use App\Models\Schedule;
 use App\Models\Specialty;
 use App\Models\University;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -54,7 +56,9 @@ class EmployeeFactory extends Factory
             'graduation_year' => $this->faker->numberBetween(2000, 2025),
 
             'is_active' => $this->faker->boolean(75),
-            'schedule_type' => $this->faker->randomElement(['FIXED', 'CUSTOM'])
+            'scheduling_type' => $this->faker->randomElement(['FIXED', 'CUSTOM']),
+            'schedule_type_id' => ScheduleType::inRandomOrder()->first()->id,
+            'schedule_id' => Schedule::factory()->create(),
         ];
     }
 }
