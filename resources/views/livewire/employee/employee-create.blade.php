@@ -191,14 +191,14 @@
                                     for="ruc"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.ruc') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    RUC
+                                    RUC *
                                 </label>
                                 <input
                                     type="text"
                                     id="ruc"
                                     wire:model="newEmployee.ruc"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.ruc') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                    placeholder="Ingrese newEmployee.RUC"
+                                    placeholder="Ingrese número de RUC"
                                     maxlength="11"
                                 />
                                 @error('newEmployee.ruc')
@@ -347,7 +347,7 @@
                                 <input
                                     type="text"
                                     id="address"
-                                    wire:model="newEmployee.newEmployee.address"
+                                    wire:model="newEmployee.address"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.address') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                     placeholder="Dirección"
                                     maxlength="90"
@@ -536,8 +536,8 @@
                                 </label>
                                 <select
                                     id="specialty_id"
-                                    wire:model="newEmploye.especialty_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploye.especialty_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    wire:model="newEmployee.specialty_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.specialty_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                 >
                                     <option value="">-- SELECCIONAR --</option>
                                     @foreach ($specialties as $specialty)
@@ -546,7 +546,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('newEmploye.especialty_id')
+                                @error('newEmployee.specialty_id')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
@@ -833,6 +833,11 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @error('newEmployee.schedule_id')
+                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                    {{ $message }}
+                                </p>
+                            @enderror  
                         </div>
                         @endif
                         <div class="flex justify-end flex-col lg:flex-row">

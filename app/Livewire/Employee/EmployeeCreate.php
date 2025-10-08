@@ -4,6 +4,7 @@ namespace App\Livewire\Employee;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+
 use App\Models\Area;
 use App\Models\EducationLevel;
 use App\Models\EducationLevelDetail;
@@ -36,7 +37,14 @@ class EmployeeCreate extends Component
         'cell_phone'        => null,
         'scheduling_type'   => null,
         'schedule_type_id'  => null,
-        'schedule_id'       => null
+        'schedule_id'       => null,
+        'education_level_detail_id' => null,
+        'occupation_id' => null,
+        'tuition_code' => null,
+        'specialty_id' => null,   
+        'specialty_number' => null,   
+        'university_id' => null,
+        'graduation_year' => null,
     ];
 
     public $hasEmploymentHistory = false;
@@ -135,7 +143,8 @@ class EmployeeCreate extends Component
         try {
             /* Log::info('store:', [
                 'valor' => $type
-            ]);  */ 
+            ]);  */                    
+                    
             DB::beginTransaction();                        
             $employee = Employee::create([
                 'first_name'        => $this->newEmployee['first_name'],
@@ -148,15 +157,23 @@ class EmployeeCreate extends Component
                 'gender'            => $this->newEmployee['gender'],
                 'marital_status'    => $this->newEmployee['marital_status'],
                 'birth_date'        => $this->newEmployee['birth_date'],
-                'has_disability'    => $this->newEmployee['has_disability'],
+                'has_disability'    => $this->newEmployee['has_disability'] ? true : false,
                 'location_code_id'  => $this->newEmployee['location_code_id'],
                 'address'           => $this->newEmployee['address'],
                 'address_reference' => $this->newEmployee['address_reference'],
                 'phone'             => $this->newEmployee['phone'],
                 'cell_phone'        => $this->newEmployee['cell_phone'],
-                'scheduling_type'   => $this->newEmployee['scheduling_type'],
+                'scheduling_type'   => $this->newEmployee['scheduling_type'], // fixed custom
                 'schedule_type_id'  => $this->newEmployee['schedule_type_id'],
-                'schedule_id'       => $this->newEmployee['schedule_id']
+                'schedule_id'       => $this->newEmployee['schedule_id'],
+                'education_level_detail_id' => $this->newEmployee['education_level_detail_id'],
+                'occupation_id' => $this->newEmployee['occupation_id'],
+                'tuition_code' => $this->newEmployee['tuition_code'],
+                'specialty_id' => $this->newEmployee['specialty_id'],
+                'specialty_number' => $this->newEmployee['specialty_number'],
+                'university_id' => $this->newEmployee['university_id'],
+                'graduation_year' => $this->newEmployee['graduation_year'],
+                'is_active' => true,
             ]);
             DB::commit();
 
