@@ -115,4 +115,9 @@ class Employee extends Model
     {
         return "{$this->last_name1} {$this->last_name2}, {$this->names}";
     }
+
+    public function schedulings()
+    {
+        return $this->hasMany(Scheduling::class);
+    }
 }

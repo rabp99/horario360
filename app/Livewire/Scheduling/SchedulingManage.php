@@ -69,6 +69,7 @@ class SchedulingManage extends Component
             $this->selectedEmployeeId = $employee->id;
             $this->employees = [];
             $this->schedules = Schedule::where('schedule_type_id', $employee->schedule_type_id)->get();
+            $this->attendances = $this->getAttendances($employee);
         }
     }
 
@@ -151,7 +152,6 @@ class SchedulingManage extends Component
     public function onSelectDate($day)
     {
         $this->attendances[$day] = [
-            'employee_id' => $this->selectedEmployeeId,
             'schedule_id' => $this->schedule_id,
             'schedule_name' => Schedule::find($this->schedule_id)->name,
             'service_id' => $this->selectedServiceId,
@@ -205,5 +205,27 @@ class SchedulingManage extends Component
             session()->flash('error', 'La Programación no fue registrada correctamente.');
             dd($th);
         }
+    }
+
+    public function getAttendances(Employee $employee)
+    {
+        $scheduling = Scheduling::where('employee_id', $employee->id)
+            ->where('scheduling_periods_area_id', $this->schedulingPeriodsArea->id)
+            ->first();
+
+        $attendances = [];
+
+        if ($scheduling) {
+            foreach ($scheduling->attendances as $attendance) {
+                $attendances[$attendance->attendance_date->day] = [
+                    'schedule_id' => $attendance->schedule_id,
+                    'schedule_name' => Schedule::find($attendance->schedule_id)->name,
+                    'service_id' => $attendance->service_id,
+                    'service_name' => Service::find($attendance->service_id)->name
+                ];
+            }
+        }
+
+        return $attendances;
     }
 }

@@ -23,4 +23,9 @@ class Scheduling extends Model
     {
         return $this->belongsTo(SchedulingPeriodsArea::class);
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

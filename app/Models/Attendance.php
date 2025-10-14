@@ -18,6 +18,10 @@ class Attendance extends Model
         'state',
     ];
 
+    protected $casts = [
+        'attendance_date' => 'date'
+    ];
+
     public function scheduling()
     {
         return $this->belongsTo(Scheduling::class);
