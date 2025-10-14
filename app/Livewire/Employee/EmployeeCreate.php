@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire\Employee;
+
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -15,6 +16,7 @@ use App\Models\Employee;
 use App\Models\LocationCode;
 use App\Models\ScheduleType;
 use App\Models\Schedule;
+use Database\Seeders\EmployeeSeeder;
 
 class EmployeeCreate extends Component
 {
@@ -41,8 +43,8 @@ class EmployeeCreate extends Component
         'education_level_detail_id' => null,
         'occupation_id' => null,
         'tuition_code' => null,
-        'specialty_id' => null,   
-        'specialty_number' => null,   
+        'specialty_id' => null,
+        'specialty_number' => null,
         'university_id' => null,
         'graduation_year' => null,
     ];
@@ -57,22 +59,22 @@ class EmployeeCreate extends Component
     public $genders;
     public $maritalStatuses;
     public $schedulingTypes;
-    public $scheduleTypes;    
-    public $has_disability = false;     
+    public $scheduleTypes;
+    public $has_disability = false;
 
     public $searchDistrict = '';
-    public $districtResults = [];    
+    public $districtResults = [];
 
     public $selectedEducationLevel = '';
     public $scheduleAssignType = false;
 
     public $schedules = [];
     public $selectedSchedule;
-        
+
     public function mount()
     {
-        $this->areas = Area::all();        
-        $this->educationLevels = EducationLevel::all();        
+        $this->areas = Area::all();
+        $this->educationLevels = EducationLevel::all();
         $this->occupations = Occupation::all();
         $this->specialties = Specialty::all();
         $this->universities = University::all();
@@ -89,17 +91,17 @@ class EmployeeCreate extends Component
     }
 
     public function updatedSelectedEducationLevel()
-    {               
-        $this->educationLevelDetails = [];       
+    {
+        $this->educationLevelDetails = [];
         if (strlen($this->selectedEducationLevel) > 0) {
             $this->educationLevelDetails = EducationLevelDetail::query()
-                ->where('education_level_id', $this->selectedEducationLevel)                
+                ->where('education_level_id', $this->selectedEducationLevel)
                 ->get();
-        }          
+        }
     }
 
     public function updatedSearchDistrict()
-    {              
+    {
         if (strlen($this->searchDistrict) > 0) {
             $this->districtResults = LocationCode::query()
                 ->where('district', 'like', '%' . $this->searchDistrict . '%')
@@ -113,7 +115,7 @@ class EmployeeCreate extends Component
     }
 
     public function updatedSelectedSchedule()
-    {               
+    {
         $this->newEmployee['schedule_id'] = $this->selectedSchedule;
     }
 
@@ -121,21 +123,21 @@ class EmployeeCreate extends Component
     {
         $this->newEmployee['location_code_id'] = $id;
         $this->searchDistrict = $name;
-        $this->districtResults = []; 
+        $this->districtResults = [];
     }
 
     public function selectSchedulingType($type)
     {            
         $this->schedules = [];   
         $this->newEmployee['schedule_id'] = null;
-        $this->newEmployee['schedule_type_id'] = null;        
+        $this->newEmployee['schedule_type_id'] = null;
     }
 
-     public function getSchedulesByType($type)
-    {       
+    public function getSchedulesByType($type)
+    {
         $this->schedules = [];
         $this->newEmployee['schedule_id'] = null;
-        $this->schedules = Schedule::where('schedule_type_id', $type)->get();         
+        $this->schedules = Schedule::where('schedule_type_id', $type)->get();
     }
 
     public function store()
@@ -143,9 +145,9 @@ class EmployeeCreate extends Component
         try {
             /* Log::info('store:', [
                 'valor' => $type
-            ]);  */                    
-                    
-            DB::beginTransaction();                        
+            ]);  */
+
+            DB::beginTransaction();
             $employee = Employee::create([
                 'first_name'        => $this->newEmployee['first_name'],
                 'last_name1'        => $this->newEmployee['last_name1'],

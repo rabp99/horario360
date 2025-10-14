@@ -15,14 +15,23 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('position_id');
+            $table->unsignedBigInteger('working_condition_detail_id');
+            $table->unsignedBigInteger('area_id');
+            // relacion con tabla pension scheme
+            $table->string('level');
             $table->date('start');
             $table->date('end')->nullable();
             $table->boolean('is_active');
             $table->unsignedDecimal('salary');
+            $table->date('start_pension_scheme');
+            $table->boolean('pension_4th');
+            $table->boolean('sctr');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('position_id')->references('id')->on('positions');
+            $table->foreign('working_condition_detail_id')->references('id')->on('working_condition_details');
+            $table->foreign('area_id')->references('id')->on('areas');
         });
     }
 
