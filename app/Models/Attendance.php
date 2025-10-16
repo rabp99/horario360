@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,11 +10,14 @@ class Attendance extends Model
     use HasFactory;
 
     protected $fillable = [
+        'type',
         'scheduling_id',
         'schedule_id',
         'service_id',
+        'occurrence_id',
         'attendance_date',
         'state',
+        'delay_time',
     ];
 
     protected $casts = [
@@ -35,5 +37,10 @@ class Attendance extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function occurrence()
+    {
+        return $this->belongsTo(Occurrence::class);
     }
 }

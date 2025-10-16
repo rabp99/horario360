@@ -77,6 +77,20 @@
 
                                     </div>
 
+                                    @if ($selectedEmployeeId)
+                                    <div class="mb-4 flex justify-between">
+                                        <div class="flex items-center">
+                                            <input id="attendance" type="radio" wire:model.live="state.type" name="type" value="attendance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="attendance" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asistencia</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input id="occurrence" type="radio" wire:model.live="state.type" name="type" value="occurrence" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="occurrence" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ocurrencia</label>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    @if ($state['type'] === 'attendance')
                                     <div class="mb-4 relative">
                                         <label for="queryService" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
                                             @error('queryService') text-red-700 dark:text-red-500 @enderror">
@@ -129,6 +143,7 @@
                                                 @error('schedule_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700
                                                 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500
                                                 dark:border-red-500 @enderror">
+                                                
                                             <option value="">-- SELECCIONAR --</option>
                                             @foreach($schedules as $schedule)
                                                 <option value="{{ $schedule->id }}">{{ $schedule->scheduleType->name }} - {{ $schedule->name }}</option>
@@ -139,6 +154,33 @@
                                             <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                    @elseif ($state['type'] === 'occurrence')
+                                    <div class="mb-4">
+                                        <label for="occurrence_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
+                                            @error('occurrence_id') text-red-700 dark:text-red-500 @enderror">
+                                            Ocurrencia
+                                        </label>
+                                        
+                                        <select id="occurrence_id" wire:model.live="state.occurrence_id"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+                                                @error('occurrence_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700
+                                                focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500
+                                                dark:border-red-500 @enderror">
+                                                
+                                            <option value="">-- SELECCIONAR --</option>
+                                            @foreach($occurrences as $occurrence)
+                                                <option value="{{ $occurrence->id }}">{{ $occurrence->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('state.occurrence_id')
+                                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    @endif
 
                                 </div>
                                 <div class="flex-1">
@@ -167,12 +209,19 @@
                                                     </div>
                                                     @if (array_key_exists($day, $attendances))
                                                     
-                                                    <button type="button" 
-                                                        class="block w-full max-w-full box-border text-center text-white bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-2 py-1 dark:bg-blue-600 overflow-x-auto whitespace-nowrap">
-                                                        <div class="inline-block">{{ $attendances[$day]['schedule_name'] }}</div>
-                                                        <br>
-                                                        <div class="inline-block">{{ $attendances[$day]['service_name'] }}</div>
-                                                    </button>
+                                                        @if ($attendances[$day]['type'] === 'attendance')
+                                                        <button type="button" 
+                                                            class="block w-full max-w-full box-border text-center text-white bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-2 py-1 dark:bg-blue-600 overflow-x-auto whitespace-nowrap">
+                                                            <div class="inline-block">{{ $attendances[$day]['schedule_name'] }}</div>
+                                                            <br>
+                                                            <div class="inline-block">{{ $attendances[$day]['service_name'] }}</div>
+                                                        </button>
+                                                        @elseif ($attendances[$day]['type'] === 'occurrence')
+                                                        <button type="button" 
+                                                            class="block w-full max-w-full box-border text-center text-white bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-2 py-1 dark:bg-blue-600 overflow-x-auto whitespace-nowrap">
+                                                            <div class="inline-block">{{ $attendances[$day]['occurrence_name'] }}</div>
+                                                        </button>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             @endfor
