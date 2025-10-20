@@ -204,6 +204,7 @@
 
     <!-- Delete User Modal -->
     <div
+        wire:ignore.self
         x-data="employeeDeleteModal()"
         x-init="init()"
         class="fixed left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full"
@@ -235,8 +236,8 @@
                     </svg>
                     <h3 class="mt-5 mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this user?</h3>
                     <a
-                        href="#"
-                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2 dark:focus:ring-red-800"
+                        wire:click="delete"
+                        class="cursor-pointer text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2 dark:focus:ring-red-800"
                     >
                         Confirmar
                     </a>

@@ -19,7 +19,7 @@ class EmployeeIndex extends Component
 
     public function render()
     {
-        $employees = Employee::paginate(10);
+        $employees = Employee::where('is_active', true)->paginate(10);
 
         return view('livewire.employee.employee-index', [
             'employees' => $employees
@@ -29,9 +29,9 @@ class EmployeeIndex extends Component
     public function setEmployeeToDelete($employeeId)
     {
         $this->employeeIdToDelete = $employeeId;        
-         Log::info('store:', [
+        /* Log::info('store:', [
                 'valor' => $this->employeeIdToDelete
-            ]);     
+            ]);   */   
         $this->dispatch('openDeleteModal');
     }
 
@@ -39,10 +39,13 @@ class EmployeeIndex extends Component
     {
         try {
             $employee = Employee::findOrFail($this->employeeIdToDelete);
-            $employee->delete();
+            
+            $employee->update([
+                'is_active' => false
+            ]);            
 
-            $this->employeeIdToDelete = null; // Reset after deletion
-            $this->dispatch('closeDeleteModal'); // Emite evento para Alpine            
+            $this->employeeIdToDelete = null;
+            $this->dispatch('closeDeleteModal');
             session()->flash('success', 'El trabajador fue eliminado correctamente.');
         } catch (\Throwable $th) {
             Log::error('Error deleting employee: ' . $th->getMessage());
