@@ -126,7 +126,8 @@ class EmployeeCreate extends Component
     }
 
     public function selectSchedulingType($type)
-    {               
+    {            
+        $this->schedules = [];   
         $this->newEmployee['schedule_id'] = null;
         $this->newEmployee['schedule_type_id'] = null;        
     }

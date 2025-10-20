@@ -658,7 +658,7 @@
                                     for="schedule_type_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.schedule_type_id') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    Tipo de horario *
+                                    Horarios *
                                 </label>
                                 <select
                                     id="schedule_type_id"
@@ -680,14 +680,16 @@
                                 @enderror                               
                             </div>                                                      
                         </div>
-                        @if($newEmployee['scheduling_type'] === 'FIXED' && $newEmployee['schedule_type_id'])
+                        @if(count($schedules) > 0)
                         <div class="mb-4">
                             <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
                                 <thead class="bg-gray-100 dark:bg-gray-700">
                                     <tr>
+                                        @if($newEmployee['scheduling_type'] === 'FIXED' && $newEmployee['schedule_type_id'])
                                         <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                             Seleccionar
                                         </th>
+                                        @endif
                                         <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                             Turno
                                         </th>
@@ -715,10 +717,11 @@
                                     </tr>
                                 </thead>
 
-                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">                        
                                     @foreach ($schedules as $schedule)
                                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                         <td class="p-4 text-center">                                            
+                                        @if($newEmployee['scheduling_type'] === 'FIXED' && $newEmployee['schedule_type_id'])
+                                        <td class="p-4 text-center">                                            
                                             <input
                                                 type="radio"
                                                 name="scheduleSelector"
@@ -726,6 +729,7 @@
                                                 value="{{ $schedule->id }}"
                                                 class="text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600"
                                             />
+                                            @endif
                                         </td>
                                         <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
                                             {{ $schedule->name }}
@@ -830,7 +834,7 @@
                                             </ul>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @endforeach                                    
                                 </tbody>
                             </table>
                             @error('newEmployee.schedule_id')
