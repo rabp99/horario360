@@ -43,4 +43,9 @@ class Attendance extends Model
     {
         return $this->belongsTo(Occurrence::class);
     }
+
+    public function attendanceChecks()
+    {
+        return $this->hasMany(AttendanceCheck::class);
+    }
 }

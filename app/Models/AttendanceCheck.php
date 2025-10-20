@@ -17,6 +17,11 @@ class AttendanceCheck extends Model
         'check_type',
     ];
 
+    protected $casts = [
+        'check_time_expected' => 'datetime',
+        'check_time_actual' => 'datetime'
+    ];
+
     public function attedance()
     {
         return $this->belongsTo(Attendance::class);
