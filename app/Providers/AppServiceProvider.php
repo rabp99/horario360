@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Contracts\BiometricDataSourceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $driver = config('biometric.drivers.' . env('BIOMETRIC_DRIVER', 'zkteco'));
+
+        $this->app->bind(BiometricDataSourceInterface::class, $driver);
     }
 
     /**

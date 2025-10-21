@@ -15,6 +15,8 @@ use App\Livewire\WorkingCondition\WorkingConditionIndex;
 use App\Livewire\WorkingCondition\WorkingConditionCreate;
 use App\Livewire\Scheduling\SchedulingIndex;
 use App\Livewire\Scheduling\SchedulingManage;
+use App\Livewire\Attendance\AttendanceIndex;
+use App\Livewire\Attendance\AttendanceDetails;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +62,7 @@ Route::middleware([
 
     Route::get('programaciones', SchedulingIndex::class)->name('scheduling.scheduling-index');
     Route::get('programaciones/programar/{schedulingPeriodsArea}', SchedulingManage::class)->name('scheduling.scheduling-manage');
+
+    Route::get('asistencias', AttendanceIndex::class)->name('attendance.attendance-index');
+    Route::get('asistencias/{employee}', AttendanceDetails::class)->name('attendance.attendance-details');
 });

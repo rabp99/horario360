@@ -12,6 +12,7 @@ use App\Models\SchedulingPeriodsArea;
 use App\Models\Service;
 use App\Models\ScheduleDetail;
 use App\Models\AttendanceCheck;
+use App\Models\Occurrence;
 use Illuminate\Support\Facades\DB;
 
 class SchedulingManage extends Component
@@ -47,6 +48,48 @@ class SchedulingManage extends Component
     public $month;
 
     public $schedulingPeriodsArea;
+
+    public $occurrences;
+
+    public $state = [
+        'type' => null,
+        'occurrence_id' => null
+    ];
+
+    public function mount(SchedulingPeriodsArea $schedulingPeriodsArea)
+    {
+        $this->schedulingPeriodsArea = $schedulingPeriodsArea;
+        $this->year = $schedulingPeriodsArea->schedulingPeriod->year;
+        $this->month = $schedulingPeriodsArea->schedulingPeriod->month;
+
+        $this->date = Carbon::createFromDate($this->year, $this->month, 1);
+
+        $this->daysInMonth = $this->date->daysInMonth;
+
+        $this->startDay = $this->date->dayOfWeek;
+
+        $totalCells = $this->startDay + $this->daysInMonth;
+        $this->remaining = (7 - ($totalCells % 7)) % 7;
+
+        $this->occurrences = Occurrence::all();
+    }
+
+    public function render()
+    {
+        return view('livewire.scheduling.scheduling-manage');
+    }
+
+    public function updatedStateType($value)
+    {
+        if ($value === 'attendance') {
+            $this->state['occurrence_id'] = null;
+        } elseif ($value === 'occurrence') {
+            $this->state['occurrence_id'] = null;
+            $this->queryService = null;
+            $this->selectedServiceId = null;
+            $this->schedule_id = null;
+        }
+    }
 
     public function updatedQueryEmployee()
     {
@@ -128,35 +171,24 @@ class SchedulingManage extends Component
         $this->selectedServiceId = null;
     }
 
-    public function mount(SchedulingPeriodsArea $schedulingPeriodsArea)
-    {
-        $this->schedulingPeriodsArea = $schedulingPeriodsArea;
-        $this->year = $schedulingPeriodsArea->schedulingPeriod->year;
-        $this->month = $schedulingPeriodsArea->schedulingPeriod->month;
-
-        $this->date = Carbon::createFromDate($this->year, $this->month, 1);
-
-        $this->daysInMonth = $this->date->daysInMonth;
-
-        $this->startDay = $this->date->dayOfWeek;
-
-        $totalCells = $this->startDay + $this->daysInMonth;
-        $this->remaining = (7 - ($totalCells % 7)) % 7;
-    }
-
-    public function render()
-    {
-        return view('livewire.scheduling.scheduling-manage');
-    }
-
     public function onSelectDate($day)
     {
-        $this->attendances[$day] = [
-            'schedule_id' => $this->schedule_id,
-            'schedule_name' => Schedule::find($this->schedule_id)->name,
-            'service_id' => $this->selectedServiceId,
-            'service_name' => Service::find($this->selectedServiceId)->name
-        ];
+        $type = $this->state['type'];
+        if ($type === 'attendance') {
+            $this->attendances[$day] = [
+                'type' => $this->state['type'],
+                'schedule_id' => $this->schedule_id,
+                'schedule_name' => Schedule::find($this->schedule_id)->name,
+                'service_id' => $this->selectedServiceId,
+                'service_name' => Service::find($this->selectedServiceId)->name
+            ];
+        } elseif ($type === 'occurrence') {
+            $this->attendances[$day] = [
+                'type' => $this->state['type'],
+                'occurrence_id' => $this->state['occurrence_id'],
+                'occurrence_name' => Occurrence::find($this->state['occurrence_id'])->name
+            ];
+        }
     }
 
     public function store()
@@ -171,13 +203,21 @@ class SchedulingManage extends Component
 
             foreach ($this->attendances as $key => $attendance) {
                 $attendanceDate = Carbon::createFromDate($this->year, $this->month, $key);
+                $type = $attendance['type'];
+
                 $attendance = Attendance::create([
+                    'type' => $attendance['type'],
+                    'occurrence_id' => $attendance['occurrence_id'] ?? null,
                     'scheduling_id' => $scheduling->id,
-                    'schedule_id' => $attendance['schedule_id'],
-                    'service_id' => $attendance['service_id'],
+                    'schedule_id' => $attendance['schedule_id'] ?? null,
+                    'service_id' => $attendance['service_id'] ?? null,
                     'attendance_date' => $attendanceDate,
                     'state' => 'pending',
                 ]);
+
+                if (!$attendance['schedule_id']) {
+                    continue;
+                }
 
                 $scheduleDetail = ScheduleDetail::where('schedule_id', $attendance['schedule_id'])
                     ->where('day', $attendanceDate->dayOfWeek)->first();
@@ -194,11 +234,11 @@ class SchedulingManage extends Component
                         'check_type' => $scheduleDetailCheck->check_type,
                     ]);
                 }
-
-                DB::commit();
-
-                redirect()->route('scheduling.scheduling-index')->with('success', 'La Programación fue registrada correctamente.');
             }
+
+            DB::commit();
+
+            redirect()->route('scheduling.scheduling-index')->with('success', 'La Programación fue registrada correctamente.');
         } catch (\Throwable $th) {
             DB::rollBack();
             logger($th->getMessage());
@@ -217,12 +257,21 @@ class SchedulingManage extends Component
 
         if ($scheduling) {
             foreach ($scheduling->attendances as $attendance) {
-                $attendances[$attendance->attendance_date->day] = [
-                    'schedule_id' => $attendance->schedule_id,
-                    'schedule_name' => Schedule::find($attendance->schedule_id)->name,
-                    'service_id' => $attendance->service_id,
-                    'service_name' => Service::find($attendance->service_id)->name
-                ];
+                if ($attendance->type === 'attendance') {
+                    $attendances[$attendance->attendance_date->day] = [
+                        'type' => $attendance->type,
+                        'schedule_id' => $attendance->schedule_id,
+                        'schedule_name' => $attendance->schedule->name,
+                        'service_id' => $attendance->service_id,
+                        'service_name' => $attendance->service->name
+                    ];
+                } elseif ($attendance->type === 'occurrence') {
+                    $attendances[$attendance->attendance_date->day] = [
+                        'type' => $attendance->type,
+                        'occurrence_id' => $attendance->occurrence_id,
+                        'occurrence_name' => $attendance->occurrence->name,
+                    ];
+                }
             }
         }
 
