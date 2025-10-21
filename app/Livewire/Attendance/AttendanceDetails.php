@@ -38,6 +38,6 @@ class AttendanceDetails extends Component
     public function showAttendanceChecks(Attendance $attendance)
     {
         $this->attendance_checks = $attendance->attendanceChecks;
-        $this->dispatch('openShowAttendanceChecksModal');
+        $this->dispatch('openAttendanceChecksModal');
     }
 }
