@@ -20,7 +20,7 @@ class EmployeeEdit extends Component
 {
     public $employee;
     public $employeeId;
-    public $hasEmploymentHistory = false;
+    
     public $areas;
     public $educationLevels;
     public $educationLevelDetails = [];

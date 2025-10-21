@@ -46,8 +46,7 @@ class EmployeeCreate extends Component
         'university_id' => null,
         'graduation_year' => null,
     ];
-
-    public $hasEmploymentHistory = false;
+    
     public $areas;
     public $educationLevels;
     public $educationLevelDetails = [];
