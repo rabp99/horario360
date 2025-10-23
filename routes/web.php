@@ -17,6 +17,7 @@ use App\Livewire\Scheduling\SchedulingIndex;
 use App\Livewire\Scheduling\SchedulingManage;
 use App\Livewire\Attendance\AttendanceIndex;
 use App\Livewire\Attendance\AttendanceDetails;
+use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Holiday\HolidayIndex;
 use App\Livewire\Holiday\HolidayCreate;
 
@@ -32,7 +33,7 @@ use App\Livewire\Holiday\HolidayCreate;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard.dashboard');
 });
 
 Route::middleware([
@@ -40,9 +41,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', Dashboard::class)->name('dashboard.dashboard');
 
     Route::get('trabajadores', EmployeeIndex::class)->name('employee.employee-index');
     Route::get('trabajadores/nuevo', EmployeeCreate::class)->name('employee.employee-create');
