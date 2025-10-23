@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Employee\EmployeeIndex;
 use App\Livewire\Schedule\ScheduleIndex;
 use App\Livewire\Schedule\ScheduleCreate;
+use App\Livewire\Profile;
 use App\Livewire\Area\AreaIndex;
 use App\Livewire\Area\AreaCreate;
 use App\Livewire\Service\ServiceIndex;
@@ -69,4 +70,6 @@ Route::middleware([
 
     Route::get('feriados', HolidayIndex::class)->name('holiday.holiday-index');
     Route::get('feriados/nuevod', HolidayCreate::class)->name('holiday.holiday-create');
+
+    Route::get('perfil', Profile::class)->name('profile');
 });
