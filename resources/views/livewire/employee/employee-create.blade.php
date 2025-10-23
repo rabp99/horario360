@@ -627,26 +627,66 @@
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                         <h3 class="mb-4 text-xl font-semibold dark:text-white">Información laboral</h3>
                         <div class="flex mb-4">
+                            <div class="w-1/2 me-2">
+                                <label
+                                    for="start"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.start') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Fecha de ingreso *
+                                </label>
+                                <input
+                                    type="date"
+                                    id="start"
+                                    wire:model="newEmploymentHistory.start"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.start') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                />
+                                @error('newEmploymentHistory.start')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div class="w-1/2 me-2">
+                                <label
+                                    for="end"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.end') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Fecha de cese *
+                                </label>
+                                <input
+                                    type="date"
+                                    id="end"
+                                    wire:model="newEmploymentHistory.end"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.end') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                />
+                                @error('newEmploymentHistory.end')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>                                                    
+                        </div>
+                        <div class="flex mb-4">                            
                             <div class="w-1/3 me-2">
                                 <label
-                                    for="education_level_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.education_level_id') text-red-700 dark:text-red-500 @enderror"
+                                    for="selectedWorkingCondition"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('selectedWorkingCondition') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    Nivel educativo *
+                                    Condición laboral *
                                 </label>
                                 <select
-                                    id="education_level_id"
-                                    wire:model.live="selectedEducationLevel"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.education_level_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    id="selectedWorkingCondition"
+                                    wire:model.live="selectedWorkingCondition"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('selectedWorkingCondition') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                 >
                                     <option value="">-- SELECCIONAR --</option>
-                                    @foreach ($educationLevels as $educationLevel)
-                                        <option value="{{ $educationLevel->id }}">
-                                            {{ $educationLevel->name }}
+                                    @foreach ($workingConditions as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('newEmployee.education_level_id')
+                                @error('selectedWorkingCondition')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
@@ -654,24 +694,97 @@
                             </div>
                             <div class="w-1/3 me-2">
                                 <label
-                                    for="education_level_detail_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.education_level_detail_id') text-red-700 dark:text-red-500 @enderror"
+                                    for="working_condition_detail_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.working_condition_detail_id') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    Grado educativo *
+                                    Modalidad *
                                 </label>
                                 <select
-                                    id="education_level_detail_id"
-                                    wire:model="newEmployee.education_level_detail_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.education_level_detail_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    id="working_condition_detail_id"
+                                    wire:model="newEmploymentHistory.working_condition_detail_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.working_condition_detail_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                 >
                                     <option value="">-- SELECCIONAR --</option>
-                                    @foreach ($educationLevelDetails as $educationLevelDetail)
-                                        <option value="{{ $educationLevelDetail->id }}">
-                                            {{ $educationLevelDetail->name }}
+                                    @foreach ($workingConditionDetails as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('newEmployee.education_level_detail_id')
+                                @error('newEmploymentHistory.working_condition_detail_id')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="position_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.position_id') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Cargo *
+                                </label>
+                                <select
+                                    id="position_id"
+                                    wire:model="newEmploymentHistory.position_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.position_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                >
+                                    <option value="">-- SELECCIONAR --</option>
+                                    @foreach ($positions as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('newEmploymentHistory.position_id')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="area_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.area_id') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Área *
+                                </label>
+                                <select
+                                    id="area_id"
+                                    wire:model="newEmploymentHistory.area_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.area_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                >
+                                    <option value="">-- SELECCIONAR --</option>
+                                    @foreach ($areas as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('newEmploymentHistory.area_id')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div class="w-1/3 me-2">
+                                <label
+                                    for="level"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.level') text-red-700 dark:text-red-500 @enderror"
+                                >
+                                    Nivel *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="level"
+                                    wire:model="newEmploymentHistory.level"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.level') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    placeholder="Nivel"
+                                    maxlength="90"
+                                />
+                                @error('newEmploymentHistory.level')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
@@ -679,24 +792,20 @@
                             </div>                            
                             <div class="w-1/3 me-2">
                                 <label
-                                    for="occupation_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.occupation_id') text-red-700 dark:text-red-500 @enderror"
+                                    for="salary"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.salary') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    Profesión *
+                                    Sueldo *
                                 </label>
-                                <select
-                                    id="occupation_id"
-                                    wire:model="newEmployee.occupation_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.occupation_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                >
-                                    <option value="">-- SELECCIONAR --</option>
-                                    @foreach ($occupations as $occupation)
-                                        <option value="{{ $occupation->id }}">
-                                            {{ $occupation->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('newEmployee.occupation_id')
+                                <input
+                                    type="text"
+                                    id="salary"
+                                    wire:model="newEmploymentHistory.salary"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.salary') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    placeholder="Sueldo"
+                                    maxlength="90"
+                                />
+                                @error('newEmploymentHistory.salary')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
@@ -704,122 +813,77 @@
                             </div>
                         </div>
                         <div class="flex mb-4">
-                            <div class="w-1/3 me-2">
+                            <div class="w-1/4 me-2">
                                 <label
-                                    for="tuition_code"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.tuition_code') text-red-700 dark:text-red-500 @enderror"
+                                    for="pension_scheme_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.pension_scheme_id') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    Colegiatura *
-                                </label>
-                                <input
-                                    type="text"
-                                    id="tuition_code"
-                                    wire:model="newEmployee.tuition_code"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.tuition_code') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                    placeholder="N° colegiatura"
-                                    maxlength="90"
-                                />
-                                @error('newEmployee.tuition_code')
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-                            <div class="w-1/3 me-2">
-                                <label
-                                    for="specialty_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.specialty_id') text-red-700 dark:text-red-500 @enderror"
-                                >
-                                    Especialidad *
+                                    Regimen Pensionario *
                                 </label>
                                 <select
-                                    id="specialty_id"
-                                    wire:model="newEmployee.specialty_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.specialty_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                                    id="pension_scheme_id"
+                                    wire:model="newEmploymentHistory.pension_scheme_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.pension_scheme_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                 >
                                     <option value="">-- SELECCIONAR --</option>
-                                    @foreach ($specialties as $specialty)
-                                        <option value="{{ $specialty->id }}">
-                                            {{ $specialty->name }}
+                                    @foreach ($pensionSchemes as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('newEmployee.specialty_id')
+                                @error('newEmploymentHistory.pension_scheme_id')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
-                            <div class="w-1/3 me-2">
+                            <div class="w-1/4 me-2">
                                 <label
-                                    for="specialty_number"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.specialty_number') text-red-700 dark:text-red-500 @enderror"
+                                    for="start_pension_scheme"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.start_pension_scheme') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    N° especialidad *
+                                    Inicio régimen pensionario *
                                 </label>
                                 <input
-                                    type="text"
-                                    id="specialty_number"
-                                    wire:model="newEmployee.specialty_number"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.specialty_number') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                    placeholder="N° especialidad"
-                                    maxlength="90"
+                                    type="date"
+                                    id="start_pension_scheme"
+                                    wire:model="newEmploymentHistory.start_pension_scheme"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmploymentHistory.start_pension_scheme') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                                 />
-                                @error('newEmployee.specialty_number')
+                                @error('newEmploymentHistory.start_pension_scheme')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="flex mb-4">
-                            <div class="w-1/2 me-2">
-                                <label
-                                    for="university_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.university_id') text-red-700 dark:text-red-500 @enderror"
-                                >
-                                    Universidad *
+                            <div class="w-1/4 me-2 flex flex-col justify-center">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" wire:model="newEmploymentHistory.pension_4th" />
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                    ></div>
+                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Suspensión 4ta</span>
                                 </label>
-                                <select
-                                    id="university_id"
-                                    wire:model="newEmployee.university_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.university_id') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                >
-                                    <option value="">-- SELECCIONAR --</option>
-                                    @foreach ($universities as $university)
-                                        <option value="{{ $university->id }}">
-                                            {{ $university->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('newEmployee.university_id')
+                                @error('newEmploymentHistory.pension_4th')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
                                 @enderror
-                            </div>
-                            <div class="w-1/2 me-2">
-                                <label
-                                    for="graduation_year"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmployee.graduation_year') text-red-700 dark:text-red-500 @enderror"
-                                >
-                                    Año egreso *
+                                <label class="relative inline-flex items-center cursor-pointer mt-2">
+                                    <input type="checkbox" class="sr-only peer" wire:model="newEmploymentHistory.sctr" />
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                    ></div>
+                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">SCTR</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    id="graduation_year"
-                                    wire:model="newEmployee.graduation_year"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('newEmployee.graduation_year') bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
-                                    placeholder=""
-                                    maxlength="90"
-                                />
-                                @error('newEmployee.graduation_year')
+                                @error('newEmploymentHistory.sctr')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                                         {{ $message }}
                                     </p>
                                 @enderror
-                            </div>
-                        </div>                        
+                            </div>                            
+                        </div> 
                     </div>
 
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">

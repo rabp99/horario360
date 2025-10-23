@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             WorkingConditionSeeder::class,
             SchedulingSeeder::class,
-            OccurrenceSeeder::class
+            OccurrenceSeeder::class,
+            PensionSchemeSeeder::class
         ]);
     }
 }

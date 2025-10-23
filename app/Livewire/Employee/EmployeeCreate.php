@@ -16,7 +16,11 @@ use App\Models\Employee;
 use App\Models\LocationCode;
 use App\Models\ScheduleType;
 use App\Models\Schedule;
-use Database\Seeders\EmployeeSeeder;
+use App\Models\EmployeeEmploymentHistory;
+use App\Models\WorkingCondition;
+use App\Models\WorkingConditionDetail;
+use App\Models\Position;
+use App\Models\PensionScheme;
 
 class EmployeeCreate extends Component
 {
@@ -48,7 +52,24 @@ class EmployeeCreate extends Component
         'university_id' => null,
         'graduation_year' => null,
     ];
-    
+
+    public $newEmploymentHistory = [
+        'employee_id' => null,
+        'position_id' => null,
+        'working_condition_detail_id' => null,
+        'area_id' => null,
+        'pension_scheme_id' => null,
+        'level' => null,
+        'start' => null,
+        'end' => null,
+        'is_active' => null,
+        'salary' => null,
+        'start_pension_scheme' => null,
+        'pension_4th' => null,
+        'sctr' => null
+    ];
+
+    public $hasEmploymentHistory = false;
     public $areas;
     public $educationLevels;
     public $educationLevelDetails = [];
@@ -71,6 +92,12 @@ class EmployeeCreate extends Component
     public $schedules = [];
     public $selectedSchedule;
 
+    public $workingConditions;
+    public $workingConditionDetails = [];
+    public $positions;
+    public $pensionSchemes;
+    public $selectedWorkingCondition = '';
+            
     public function mount()
     {
         $this->areas = Area::all();
@@ -83,6 +110,9 @@ class EmployeeCreate extends Component
         $this->genders = Employee::GENDERS;
         $this->maritalStatuses = Employee::MARITAL_STATUSES;
         $this->schedulingTypes = Employee::SCHEDULING_TYPES;
+        $this->workingConditions = WorkingCondition::where('is_active', true)->get();
+        $this->positions = Position::where('is_active', true)->get();
+        $this->pensionSchemes = PensionScheme::where('is_active', true)->get();
     }
 
     public function render()
@@ -96,6 +126,20 @@ class EmployeeCreate extends Component
         if (strlen($this->selectedEducationLevel) > 0) {
             $this->educationLevelDetails = EducationLevelDetail::query()
                 ->where('education_level_id', $this->selectedEducationLevel)
+                ->get();
+        }
+    }
+
+    public function updatedSelectedWorkingCondition()
+    {
+        Log::info('selectedWorkingCondition:', [
+                'valor' => $this->selectedWorkingCondition
+            ]); 
+        $this->workingConditionDetails = [];
+        if (strlen($this->selectedWorkingCondition) > 0) {
+            $this->workingConditionDetails = WorkingConditionDetail::query()
+                ->where('working_condition_id', $this->selectedWorkingCondition)
+                ->where('is_active', true)
                 ->get();
         }
     }
@@ -177,6 +221,23 @@ class EmployeeCreate extends Component
                 'graduation_year' => $this->newEmployee['graduation_year'],
                 'is_active' => true,
             ]);
+
+            EmployeeEmploymentHistory::create([
+                'employee_id' => $employee->id,
+                'position_id' => $this->newEmploymentHistory['position_id'],
+                'working_condition_detail_id' => $this->newEmploymentHistory['working_condition_detail_id'],
+                'area_id' => $this->newEmploymentHistory['area_id'],
+                'pension_scheme_id' => $this->newEmploymentHistory['pension_scheme_id'],
+                'level' => $this->newEmploymentHistory['level'],
+                'start' => $this->newEmploymentHistory['start'],
+                'end' => $this->newEmploymentHistory['end'],
+                'is_active' => true,
+                'salary' => $this->newEmploymentHistory['salary'],
+                'start_pension_scheme' => $this->newEmploymentHistory['start_pension_scheme'],
+                'pension_4th' => $this->newEmploymentHistory['pension_4th'] ? true : false,
+                'sctr' => $this->newEmploymentHistory['sctr'] ? true : false
+            ]);
+
             DB::commit();
 
             redirect()->route('employee.employee-index')->with('success', 'El trabajador fue registrado correctamente.');
