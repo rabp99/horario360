@@ -17,6 +17,8 @@ use App\Livewire\Scheduling\SchedulingIndex;
 use App\Livewire\Scheduling\SchedulingManage;
 use App\Livewire\Attendance\AttendanceIndex;
 use App\Livewire\Attendance\AttendanceDetails;
+use App\Livewire\Holiday\HolidayIndex;
+use App\Livewire\Holiday\HolidayCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,4 +67,7 @@ Route::middleware([
 
     Route::get('asistencias', AttendanceIndex::class)->name('attendance.attendance-index');
     Route::get('asistencias/{employee}', AttendanceDetails::class)->name('attendance.attendance-details');
+
+    Route::get('feriados', HolidayIndex::class)->name('holiday.holiday-index');
+    Route::get('feriados/nuevod', HolidayCreate::class)->name('holiday.holiday-create');
 });
