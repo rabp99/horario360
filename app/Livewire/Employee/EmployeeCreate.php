@@ -131,10 +131,7 @@ class EmployeeCreate extends Component
     }
 
     public function updatedSelectedWorkingCondition()
-    {
-        Log::info('selectedWorkingCondition:', [
-                'valor' => $this->selectedWorkingCondition
-            ]); 
+    {        
         $this->workingConditionDetails = [];
         if (strlen($this->selectedWorkingCondition) > 0) {
             $this->workingConditionDetails = WorkingConditionDetail::query()

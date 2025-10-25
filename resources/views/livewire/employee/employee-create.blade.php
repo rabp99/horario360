@@ -749,7 +749,7 @@
                                     for="area_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white @error('newEmploymentHistory.area_id') text-red-700 dark:text-red-500 @enderror"
                                 >
-                                    Área *
+                                    Denominación orgánica *
                                 </label>
                                 <select
                                     id="area_id"
